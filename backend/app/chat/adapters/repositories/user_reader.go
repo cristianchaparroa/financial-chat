@@ -1,6 +1,7 @@
-package repository
+package repositories
 
 import (
+	"chat/app/chat/adapters/repositories/entities"
 	"chat/app/dataproviders/sql"
 	"chat/chat"
 	"chat/chat/ports"
@@ -27,7 +28,7 @@ func newUserReader(conn sql.Connection) ports.UserReader {
 }
 
 func (u *userReader) FinUserByID(id string) *chat.User {
-	var user *User
-	u.db.Model(User{}).Where("id = ?", id).First(&user)
+	var user entities.User
+	u.db.Where("id = ?", id).First(&user)
 	return user.ToDomain()
 }

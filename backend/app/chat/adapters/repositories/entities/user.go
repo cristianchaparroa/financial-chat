@@ -1,4 +1,4 @@
-package repository
+package entities
 
 import (
 	"chat/chat"
@@ -22,6 +22,9 @@ func NewFromDomain(u *chat.User) *User {
 }
 
 func (u *User) ToDomain() *chat.User {
+	if u == nil {
+		return nil
+	}
 	return &chat.User{
 		ID:        u.ID,
 		Name:      u.Name,

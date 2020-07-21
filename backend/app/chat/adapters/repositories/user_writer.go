@@ -1,6 +1,7 @@
-package repository
+package repositories
 
 import (
+	"chat/app/chat/adapters/repositories/entities"
 	"chat/app/dataproviders/sql"
 	"chat/chat"
 	"chat/chat/ports"
@@ -27,7 +28,7 @@ func newUserWriter(conn sql.Connection) ports.UserWriter {
 }
 
 func (u *userWriter) Create(user *chat.User) *chat.User {
-	entity := NewFromDomain(user)
-	u.db.Model(User{}).Save(&entity)
+	entity := entities.NewFromDomain(user)
+	u.db.Model(entities.User{}).Save(&entity)
 	return entity.ToDomain()
 }
