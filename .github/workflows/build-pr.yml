@@ -32,26 +32,26 @@ jobs:
       - name: Build
         run: go build -v .
 
-    test:
-      name: Test
-      runs-on: ubuntu-latest
-      steps:
-        - name: Set up Go
-          uses: actions/setup-go@v1
-          with:
-            go-version: 1.12
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Go
+        uses: actions/setup-go@v1
+        with:
+          go-version: 1.12
 
-        - name: Check out code
-          uses: actions/checkout@v1
+      - name: Check out code
+        uses: actions/checkout@v1
 
-        - name: coverage
-          run: |
-            go test -coverprofile=c.out
-            go tool cover -html=c.out -o coverage.html
-            cat c.out >> coverage.txt
+      - name: coverage
+        run: |
+          go test -coverprofile=c.out
+          go tool cover -html=c.out -o coverage.html
+          cat c.out >> coverage.txt
 
-        - name: Upload Coverage report to CodeCov
-          uses: codecov/codecov-action@v1.0.0
-          with:
-            token: ${{secrets.CODECOV_TOKEN}}
-            file: ./coverage.txt
+      - name: Upload Coverage report to CodeCov
+        uses: codecov/codecov-action@v1.0.0
+        with:
+          token: ${{secrets.CODECOV_TOKEN}}
+          file: ./coverage.txt
