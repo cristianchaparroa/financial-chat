@@ -16,6 +16,7 @@ func NewMockConnection() Connection {
 	mocket.Catcher.Logging = true
 	db, _ := gorm.Open(mocket.DriverName, "connection_mock")
 
+	db.LogMode(true)
 	return &MockConnection{db: db}
 }
 
