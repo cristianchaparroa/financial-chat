@@ -57,8 +57,7 @@ jobs:
           cat c.out >> coverage.txt
 
       - name: Upload Coverage report to CodeCov
-        working-directory: ${{env.working-directory}}
         uses: codecov/codecov-action@v1.0.0
         with:
           token: ${{secrets.CODECOV_TOKEN}}
-          file: ./coverage.txt
+          file: ${{env.working-directory}}/coverage.txt
