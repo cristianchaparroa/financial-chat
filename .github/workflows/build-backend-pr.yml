@@ -30,9 +30,13 @@ jobs:
         working-directory: ${{env.working-directory}}
         env:
           GOPROXY: "https://proxy.golang.org"
-        run: go mod tidy
+        run: |
+          pwd
+          ls -la
+          go mod tidy
 
       - name: Build
+        working-directory: ${{env.working-directory}}
         run: go build -v .
 
   test:
