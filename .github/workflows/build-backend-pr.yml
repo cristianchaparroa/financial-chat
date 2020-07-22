@@ -14,12 +14,10 @@ jobs:
     steps:
       - name: Set up Go 1.14
         uses: actions/setup-go@v1
-        working-directory: ${{env.working-directory}}
         with:
           go-version: 1.14
         id: go
       - name: Cache Go modules
-        working-directory: ${{env.working-directory}}
         uses: actions/cache@preview
         with:
           path: ~/go/pkg/mod
@@ -44,13 +42,11 @@ jobs:
       working-directory: ./backend
     steps:
       - name: Set up Go
-        working-directory: ${{env.working-directory}}
         uses: actions/setup-go@v1
         with:
           go-version: 1.12
 
       - name: Check out code
-        working-directory: ${{env.working-directory}}
         uses: actions/checkout@v1
 
       - name: coverage
