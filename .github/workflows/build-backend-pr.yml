@@ -29,12 +29,12 @@ jobs:
       - name: Get dependencies
         env:
           GOPROXY: "https://proxy.golang.org"
-        run: |
-          cd ${{env.working-directory}}
-          go mod tidy
+        working-directory: ${{env.working-directory}}
+        run: go mod tidy
 
       - name: Build
-        run: go build -v ./${{env.working-directory}}
+        working-directory: ${{env.working-directory}}
+        run: go build -v .
 
   test:
     name: Test
