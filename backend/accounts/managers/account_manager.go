@@ -38,13 +38,13 @@ func (m *accountManager) Login(acc *accounts.Account) (*accounts.Account, error)
 	u := m.reader.FindByEmail(acc.Email)
 
 	if u == nil {
-		return nil, errors.New(userNotFound)
+		return nil, errors.New(UserNotFound)
 	}
 
 	err := bcrypt.CompareHashAndPassword([]byte(u.Password), []byte(acc.Password))
 
 	if err != nil {
-		return nil, errors.New(userNotAuthenticated)
+		return nil, errors.New(UserNotAuthenticated)
 	}
 	return u, nil
 }
