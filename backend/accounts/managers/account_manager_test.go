@@ -82,3 +82,16 @@ func (s *accountManagerSuite) TestCreate() {
 	s.Nil(err)
 	s.Equal(acc, result)
 }
+
+func (s *accountManagerSuite) TestGetByID() {
+	entity := entityFixtures.GetAccount()
+	acc := entity.ToDomain()
+
+	s.reader.On("FindByID", mock.Anything).
+		Return(acc).
+		Once()
+
+
+	result := s.manager.GetByID("12345")
+	s.NotNil(result)
+}
