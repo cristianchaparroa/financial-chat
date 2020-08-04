@@ -1,6 +1,7 @@
 package managers
 
 import (
+	"chat/accounts"
 	"chat/accounts/ports"
 	"chat/accounts/ports/fixtures"
 	"chat/accounts/ports/mocks"
@@ -52,4 +53,21 @@ func (s *accountManagerSuite) TestLoginUserNotAuthenticated() {
 	acc, err := s.manager.Login(acc)
 	s.NotNil(err)
 	s.Equal(userNotAuthenticated, err.Error())
+}
+
+func (s *accountManagerSuite) TestLoginUserAuthenticated() {
+	entity := entityFixtures.GetAccount()
+	entity.Password = "$2a$04$OM9mX7jdK34ey6Tu8gfx9eGbXVECy/x9zsHVNehkIb3DUvldOcAOq"
+	accountRequest := entity.ToDomain()
+
+	password := "De76cBmu6AhGJNWzSXUXtaJkRhTj7EQ9jff46A7sXXg9Q"
+	acc := &accounts.Account{Password: password}
+
+	s.reader.On("FindByEmail", mock.Anything).
+		Return(accountRequest, nil).
+		Once()
+
+	acc, err := s.manager.Login(acc)
+	s.Nil(err)
+	s.NotNil(acc)
 }
