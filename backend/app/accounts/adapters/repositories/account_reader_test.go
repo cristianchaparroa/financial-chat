@@ -13,6 +13,7 @@ import (
 
 const (
 	selectByID = "SELECT * FROM accounts WHERE ID ="
+	selectByEmail = "SELECT * FROM accounts WHERE email ="
 )
 
 type accountReaderSuite struct {
@@ -42,5 +43,21 @@ func (s *accountReaderSuite) TestAccountReader_FindByID() {
 
 	user := s.reader.FindByID(id)
 	s.NotNil(user)
-	//s.Equal(id, user.ID)
+}
+
+func (s *accountReaderSuite) TestAccountReader_FindByEmail() {
+	email := "test@gmail.com"
+	id := uuid.NewV1().String()
+
+	sql := fmt.Sprintf("%s?=%s", selectByEmail, email)
+
+	accExpected := fixtures.GetAccountEntity(id)
+
+	mocket.Catcher.Logging = true
+	mocket.Catcher.Reset().NewMock().
+		WithQuery(sql).
+		WithReply(accExpected)
+
+	acc := s.reader.FindByEmail(email)
+	s.NotNil(acc)
 }
