@@ -14,7 +14,7 @@ type AccountWriter struct {
 }
 
 // Create provides a mock function with given fields: account
-func (_m *AccountWriter) Create(account *accounts.Account) *accounts.Account {
+func (_m *AccountWriter) Create(account *accounts.Account) (*accounts.Account, error) {
 	ret := _m.Called(account)
 
 	var r0 *accounts.Account
@@ -26,5 +26,12 @@ func (_m *AccountWriter) Create(account *accounts.Account) *accounts.Account {
 		}
 	}
 
-	return r0
+	var r1 error
+	if rf, ok := ret.Get(1).(func(*accounts.Account) error); ok {
+		r1 = rf(account)
+	} else {
+		r1 = ret.Error(1)
+	}
+
+	return r0, r1
 }
