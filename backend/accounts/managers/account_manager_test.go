@@ -71,3 +71,14 @@ func (s *accountManagerSuite) TestLoginUserAuthenticated() {
 	s.Nil(err)
 	s.NotNil(acc)
 }
+
+func (s *accountManagerSuite) TestCreate() {
+	entity := entityFixtures.GetAccount()
+	acc := entity.ToDomain()
+
+	s.writer.On("Create", mock.Anything).Return(acc, nil).Once()
+
+	result, err := s.manager.Create(acc)
+	s.Nil(err)
+	s.Equal(acc, result)
+}
