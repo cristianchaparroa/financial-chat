@@ -4,6 +4,7 @@ import (
 	"chat/accounts"
 	"chat/accounts/ports"
 	"chat/core"
+	"errors"
 	"github.com/dgrijalva/jwt-go"
 	log "github.com/sirupsen/logrus"
 	"os"
@@ -46,7 +47,7 @@ func (m *tokenManager) Generate(acc *accounts.Account) (string, error) {
 
 	token, err := at.SignedString(sign)
 	if err != nil {
-		return "", err
+		return "", errors.New(tokenError)
 	}
 	return token, nil
 }

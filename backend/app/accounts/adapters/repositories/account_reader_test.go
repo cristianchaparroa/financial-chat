@@ -12,7 +12,7 @@ import (
 )
 
 const (
-	selectByID = "SELECT * FROM accounts WHERE ID ="
+	selectByID    = "SELECT * FROM accounts WHERE ID ="
 	selectByEmail = "SELECT * FROM accounts WHERE email ="
 )
 

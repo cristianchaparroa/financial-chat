@@ -91,7 +91,6 @@ func (s *accountManagerSuite) TestGetByID() {
 		Return(acc).
 		Once()
 
-
 	result := s.manager.GetByID("12345")
 	s.NotNil(result)
 }
