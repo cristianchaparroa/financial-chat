@@ -10,9 +10,9 @@ import (
 )
 
 func init() {
-	err := core.Injector.Provide(newUsersHandler)
+	err := core.Injector.Provide(newLoginHandler)
 	if err != nil {
-		log.Println("Error providing UsersHandler instance:", err)
+		log.Println("Error providing LoginHandler instance:", err)
 		panic(err)
 	}
 }
@@ -21,7 +21,7 @@ type LoginHandler struct {
 	manager ports.LoginManager
 }
 
-func newUsersHandler(manager ports.LoginManager) *LoginHandler {
+func newLoginHandler(manager ports.LoginManager) *LoginHandler {
 	return &LoginHandler{manager: manager}
 }
 

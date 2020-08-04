@@ -33,12 +33,12 @@ func (s *loginManagerSuite) TestLoginAccountNotFound() {
 	acc := e.ToDomain()
 
 	s.accManager.On("Login", mock.Anything).
-		Return(nil, errors.New(userNotFound)).
+		Return(nil, errors.New(UserNotFound)).
 		Once()
 
 	_, token, err := s.manager.Login(acc)
 	s.NotNil(err)
-	s.Equal(userNotFound, err.Error())
+	s.Equal(UserNotFound, err.Error())
 	s.Empty(token)
 }
 
@@ -52,12 +52,12 @@ func (s *loginManagerSuite) TestLoginAccountTokenError() {
 		Once()
 
 	s.token.On("Generate", mock.Anything).
-		Return("", errors.New(tokenError)).
+		Return("", errors.New(TokenError)).
 		Once()
 
 	_, token, err := s.manager.Login(acc)
 	s.NotNil(err)
-	s.Equal(tokenError, err.Error())
+	s.Equal(TokenError, err.Error())
 	s.Empty(token)
 }
 

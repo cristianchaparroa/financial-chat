@@ -50,12 +50,12 @@ func (s *registerManagerSuite) TestRegisterTokenError() {
 		Once()
 
 	s.token.On("Generate", mock.Anything).
-		Return("", errors.New(tokenError)).
+		Return("", errors.New(TokenError)).
 		Once()
 
 	_, token, err := s.manager.Register(acc)
 	s.NotNil(err)
-	s.Equal(tokenError, err.Error())
+	s.Equal(TokenError, err.Error())
 	s.Empty(token)
 }
 

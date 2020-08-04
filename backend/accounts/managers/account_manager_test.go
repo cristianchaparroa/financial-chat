@@ -33,12 +33,12 @@ func (s *accountManagerSuite) SetupSuite() {
 func (s *accountManagerSuite) TestLoginUserNotfound() {
 	acc := fixtures.GetAccount()
 	s.reader.On("FindByEmail", mock.Anything).
-		Return(nil, errors.New(userNotFound)).
+		Return(nil, errors.New(UserNotFound)).
 		Once()
 
 	acc, err := s.manager.Login(acc)
 	s.NotNil(err)
-	s.Equal(userNotFound, err.Error())
+	s.Equal(UserNotFound, err.Error())
 
 }
 
@@ -52,7 +52,7 @@ func (s *accountManagerSuite) TestLoginUserNotAuthenticated() {
 
 	acc, err := s.manager.Login(acc)
 	s.NotNil(err)
-	s.Equal(userNotAuthenticated, err.Error())
+	s.Equal(UserNotAuthenticated, err.Error())
 }
 
 func (s *accountManagerSuite) TestLoginUserAuthenticated() {

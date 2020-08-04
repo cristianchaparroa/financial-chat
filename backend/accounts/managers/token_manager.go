@@ -47,7 +47,7 @@ func (m *tokenManager) Generate(acc *accounts.Account) (string, error) {
 
 	token, err := at.SignedString(sign)
 	if err != nil {
-		return "", errors.New(tokenError)
+		return "", errors.New(TokenError)
 	}
 	return token, nil
 }
