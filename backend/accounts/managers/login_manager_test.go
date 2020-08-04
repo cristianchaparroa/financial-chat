@@ -60,3 +60,22 @@ func (s *loginManagerSuite) TestLoginAccountTokenError() {
 	s.Equal(tokenError, err.Error())
 	s.Empty(token)
 }
+
+func (s *loginManagerSuite) TestLogin() {
+
+	e := fixtures.GetAccount()
+	acc := e.ToDomain()
+
+	s.accManager.On("Login", mock.Anything).
+		Return(acc, nil).
+		Once()
+
+	tokenExpected := "12345"
+	s.token.On("Generate", mock.Anything).
+		Return(tokenExpected, nil).
+		Once()
+
+	_, token, err := s.manager.Login(acc)
+	s.Nil(err)
+	s.Equal(tokenExpected, token)
+}
