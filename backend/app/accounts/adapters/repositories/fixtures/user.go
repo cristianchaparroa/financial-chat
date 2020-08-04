@@ -11,6 +11,8 @@ func GetAccount() *entities.Account {
 	return &entities.Account{
 		ID:        uuid.NewV1().String(),
 		Name:      "John Doe",
+		Email:     "johndoe@gmail.com",
+		Password:  "12345",
 		CreatedAt: &now,
 		UpdatedAt: &now,
 	}
