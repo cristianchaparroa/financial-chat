@@ -1,6 +1,7 @@
 package managers
 
 const (
-	userNotFound         = "user not found"
-	userNotAuthenticated = "user not authenticated"
+	userNotFound         = "account not found"
+	userNotAuthenticated = "account not authenticated"
+	tokenError           = "token error"
 )
