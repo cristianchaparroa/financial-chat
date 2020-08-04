@@ -24,6 +24,15 @@ func (s *accountWriterSuite) SetupTest() {
 
 func (s *accountWriterSuite) TestAccountWriter_Create() {
 	u := fixtures.GetAccount()
-	user := s.writer.Create(u.ToDomain())
-	s.Equal(u.ToDomain(), user)
+	userExpected := u.ToDomain()
+
+	userCreated, err := s.writer.Create(userExpected)
+	s.Nil(err)
+
+	userExpected = userExpected.SetHashPassword(userExpected.Password)
+
+	s.Equal(userExpected.Email, userCreated.Email)
+	s.Equal(userExpected.Name, userCreated.Name)
+	s.Equal(userExpected.CreatedAt, userCreated.CreatedAt)
+	s.Equal(userExpected.UpdatedAt, userCreated.UpdatedAt)
 }
