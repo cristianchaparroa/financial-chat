@@ -55,7 +55,7 @@ jobs:
       - name: coverage
         run: |
           cd backend
-          go test -coverprofile=c.out
+          go test ./... -coverprofile=c.out
           go tool cover -html=c.out -o coverage.html
           cat c.out >> coverage.txt
           ls -la
@@ -64,6 +64,5 @@ jobs:
         uses: codecov/codecov-action@v1.0.0
         with:
           token: ${{secrets.CODECOV_TOKEN}}
-          fail_ci_if_error: true
           flags: unittests
           file: ./backend/coverage.txt
