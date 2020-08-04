@@ -14,7 +14,7 @@ type AccountManager struct {
 }
 
 // Create provides a mock function with given fields: u
-func (_m *AccountManager) Create(u *accounts.Account) *accounts.Account {
+func (_m *AccountManager) Create(u *accounts.Account) (*accounts.Account, error) {
 	ret := _m.Called(u)
 
 	var r0 *accounts.Account
@@ -26,7 +26,14 @@ func (_m *AccountManager) Create(u *accounts.Account) *accounts.Account {
 		}
 	}
 
-	return r0
+	var r1 error
+	if rf, ok := ret.Get(1).(func(*accounts.Account) error); ok {
+		r1 = rf(u)
+	} else {
+		r1 = ret.Error(1)
+	}
+
+	return r0, r1
 }
 
 // GetByID provides a mock function with given fields: ID
