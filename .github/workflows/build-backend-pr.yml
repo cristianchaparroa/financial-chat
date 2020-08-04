@@ -53,14 +53,16 @@ jobs:
         uses: actions/checkout@v1
 
       - name: coverage
-        working-directory: ${{env.working-directory}}
         run: |
+          cd backend
           go test -coverprofile=c.out
           go tool cover -html=c.out -o coverage.html
           cat c.out >> coverage.txt
+          ls -la
 
       - name: Upload Coverage report to CodeCov
         uses: codecov/codecov-action@v1.0.0
         with:
           token: ${{secrets.CODECOV_TOKEN}}
-          file: ${{env.working-directory}}/coverage.txt
+          directory: ./backend
+          file: ./coverage.txt
