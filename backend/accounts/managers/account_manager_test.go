@@ -4,6 +4,7 @@ import (
 	"chat/accounts/ports"
 	"chat/accounts/ports/fixtures"
 	"chat/accounts/ports/mocks"
+	entityFixtures "chat/app/accounts/adapters/repositories/fixtures"
 	"errors"
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/suite"
@@ -38,4 +39,17 @@ func (s *accountManagerSuite) TestLoginUserNotfound() {
 	s.NotNil(err)
 	s.Equal(userNotFound, err.Error())
 
+}
+
+func (s *accountManagerSuite) TestLoginUserNotAuthenticated() {
+	entity := entityFixtures.GetAccount()
+	acc := entity.ToDomain()
+
+	s.reader.On("FindByEmail", mock.Anything).
+		Return(acc, nil).
+		Once()
+
+	acc, err := s.manager.Login(acc)
+	s.NotNil(err)
+	s.Equal(userNotAuthenticated, err.Error())
 }
