@@ -1,9 +1,11 @@
-name: Check Peer Review
+name: Build master
 
 on:
   push:
     branches:
       - master
+
+jobs:
 
   test:
     name: Test
