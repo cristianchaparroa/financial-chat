@@ -6,6 +6,7 @@ import (
 	accountFixtures "chat/accounts/ports/fixtures"
 	"chat/accounts/ports/mocks"
 	"chat/app/accounts/adapters/handlers/fixtures"
+	testingHelper "chat/core/handlers/testing"
 	"errors"
 	"github.com/gin-gonic/gin"
 	"github.com/stretchr/testify/mock"
@@ -34,13 +35,13 @@ func (s *loginHandlerSuite) SetupSuite() {
 
 func (s *loginHandlerSuite) TestEmptyLoginRequest() {
 	data := fixtures.GetEmptyLoginRequest()
-	request := fixtures.GetLoginRequestBody(data)
+	request := testingHelper.GetRequestBody(data)
 	recorder := s.performLogin(request)
 	s.Equal(http.StatusBadRequest, recorder.Code)
 }
 func (s *loginHandlerSuite) TestLoginRequest_invalidToken() {
 	data := fixtures.GetLoginRequest()
-	request := fixtures.GetLoginRequestBody(data)
+	request := testingHelper.GetRequestBody(data)
 
 	acc := accountFixtures.GetAccount()
 
@@ -54,7 +55,7 @@ func (s *loginHandlerSuite) TestLoginRequest_invalidToken() {
 
 func (s *loginHandlerSuite) TestLoginRequest() {
 	data := fixtures.GetLoginRequest()
-	request := fixtures.GetLoginRequestBody(data)
+	request := testingHelper.GetRequestBody(data)
 
 	acc := accountFixtures.GetAccount()
 
@@ -68,20 +69,10 @@ func (s *loginHandlerSuite) TestLoginRequest() {
 }
 
 func (s *loginHandlerSuite) performLogin(body *bytes.Buffer) *httptest.ResponseRecorder {
-	return s.performRequest(
+	return testingHelper.PerformRequest(
 		s.handler.Login,
 		body,
 		http.MethodPost,
-		"/v1/users/register",
+		"/login",
 	)
-}
-
-func (s *loginHandlerSuite) performRequest(handler gin.HandlerFunc, body *bytes.Buffer, method, path string) *httptest.ResponseRecorder {
-	recorder := httptest.NewRecorder()
-	gin.SetMode(gin.TestMode)
-	c, r := gin.CreateTestContext(recorder)
-	r.Handle(method, path, handler)
-	c.Request, _ = http.NewRequest(http.MethodPost, path, body)
-	r.ServeHTTP(recorder, c.Request)
-	return recorder
 }
