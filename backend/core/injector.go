@@ -1,7 +1,12 @@
 package core
 
 import (
+	log "github.com/sirupsen/logrus"
 	"go.uber.org/dig"
+)
+
+const (
+	moduleName = "injection"
 )
 
 // Injector wires all the application dependencies. This is done at runtime.
@@ -12,3 +17,18 @@ import (
 //Given that it reuses the same standard constructors, it also lives perfectly alongside the tests.
 //
 var Injector = dig.New(dig.DeferAcyclicVerification())
+
+func CheckInjection(err error, instanceName string) {
+
+	if err == nil {
+		return
+	}
+
+	log.WithFields(log.Fields{
+		"module":   moduleName,
+		"instance": instanceName,
+	}).Error(err)
+
+	panic(err)
+
+}

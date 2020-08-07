@@ -5,16 +5,12 @@ import (
 	"chat/accounts/ports"
 	"chat/core"
 	"errors"
-	log "github.com/sirupsen/logrus"
 	"golang.org/x/crypto/bcrypt"
 )
 
 func init() {
 	err := core.Injector.Provide(newAccountManager)
-	if err != nil {
-		log.Println("Error providing AccountManager instance:", err)
-		panic(err)
-	}
+	core.CheckInjection(err, "AccountManager")
 }
 
 type accountManager struct {

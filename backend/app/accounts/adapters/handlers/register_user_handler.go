@@ -5,16 +5,12 @@ import (
 	"chat/core"
 	"chat/core/handlers"
 	"github.com/gin-gonic/gin"
-	log "github.com/sirupsen/logrus"
 	"net/http"
 )
 
 func init() {
 	err := core.Injector.Provide(newRegisterUserHandler)
-	if err != nil {
-		log.Println("Error providing RegisterUserHandler instance:", err)
-		panic(err)
-	}
+	core.CheckInjection(err, "RegisterUserHandler")
 }
 
 type RegisterUserHandler struct {

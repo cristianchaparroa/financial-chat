@@ -13,9 +13,7 @@ import (
 
 func init() {
 	err := core.Injector.Provide(NewMySQLConnection)
-	if err != nil {
-		log.Println("Error providing  MySQL connection:", err)
-	}
+	core.CheckInjection(err, "MySQLConnection")
 }
 
 // getURL retrieves the URL to connection to SQL database.
