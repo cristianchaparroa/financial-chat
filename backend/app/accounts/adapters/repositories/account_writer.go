@@ -7,15 +7,11 @@ import (
 	"chat/app/dataproviders/sql"
 	"chat/core"
 	"github.com/jinzhu/gorm"
-	log "github.com/sirupsen/logrus"
 )
 
 func init() {
 	err := core.Injector.Provide(newAccountWriter)
-	if err != nil {
-		log.Println("Error providing AccountWriter instance:", err)
-		panic(err)
-	}
+	core.CheckInjection(err, "AccountReader")
 }
 
 type accountWriter struct {

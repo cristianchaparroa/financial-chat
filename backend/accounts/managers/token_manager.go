@@ -6,7 +6,6 @@ import (
 	"chat/core"
 	"errors"
 	"github.com/dgrijalva/jwt-go"
-	log "github.com/sirupsen/logrus"
 	"os"
 	"time"
 )
@@ -18,10 +17,7 @@ const (
 
 func init() {
 	err := core.Injector.Provide(newTokenManager)
-	if err != nil {
-		log.Println("Error providing  UserTokenManager instance:", err)
-		panic(err)
-	}
+	core.CheckInjection(err, "TokenManager")
 }
 
 type tokenManager struct {

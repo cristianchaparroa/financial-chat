@@ -4,15 +4,11 @@ import (
 	"chat/accounts"
 	"chat/accounts/ports"
 	"chat/core"
-	log "github.com/sirupsen/logrus"
 )
 
 func init() {
 	err := core.Injector.Provide(newRegisterManager)
-	if err != nil {
-		log.Println("Error providing LoginManager instance:", err)
-		panic(err)
-	}
+	core.CheckInjection(err, "RegisterManager")
 }
 
 type registerManager struct {
